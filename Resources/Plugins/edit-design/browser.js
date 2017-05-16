@@ -15,6 +15,7 @@ enabled(){
     fontSize: "12px",
     hideTweetActions: true,
     moveTweetActionsToRight: true,
+    revertSearch: true,
     revertReplies: false,
     themeColorTweaks: true,
     roundedScrollBars: false,
@@ -434,6 +435,45 @@ ready(){
   // modal
   $("[data-action='settings-menu']").on("click", this.onSettingsMenuClickedEvent);
   $(".js-app").append('<div id="td-design-plugin-modal" class="js-modal settings-modal ovl scroll-v scroll-styled-v"></div>');
+  
+  // event handler injections
+  (function(me){
+    let ctx = $._data(document, "events")["uiSearchInputSubmit"][0].handler.context;
+    let prevPerformSearch = ctx.performSearch;
+    
+    // TODO rough prototype
+    // - readd user search
+    // - fix missing avatars
+    // - fix missing scroll and click functionality
+    
+    ctx.performSearch = function(e){
+      if (me.config.revertSearch && e.searchScope !== "users"){
+        this.trigger("uiNewSearchQuery", { query: e.query });
+        this.defaultHeight = "max";
+        this.$typeaheadContainer.addClass("is-hidden");
+        this.$searchResultsContainer.removeClass("is-hidden");
+        this.trigger("uiSearch", e);
+        this.showPopover();
+        this.searchData = null;
+        return;
+      }
+      
+      return prevPerformSearch.apply(this, arguments);
+    };
+    
+    TD.services.TwitterClient.prototype.userSearch = function(e, t, i){
+      this.makeTwitterCall(this.API_BASE_URL + "search/tweets.json", { q: e }, "GET", null, res => {
+        let html = [];
+        let account = TD.controller.clients.getPreferredClient().oauth.account;
+        
+        for(let tweet of res.statuses.map(json => new TD.services.TwitterStatus(account).fromJSONObject(json))){
+          html.push(TD.ui.template.render("status/tweet_in_stream", { tweet: tweet }));
+        }
+        
+        $(".js-user-results:first").append(html.join(""));
+      }, i);
+    };
+  })(this);
 }
 
 disabled(){
