@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using TweetDuck.Core.Utils;
 
 namespace TweetDuck.Core.Management{
     sealed class ContextInfo{
@@ -9,8 +10,13 @@ namespace TweetDuck.Core.Management{
             Reset();
         }
         
-        public void SetLink(string? type, string? url){
-            Link = new LinkInfo(string.IsNullOrEmpty(url!) ? null : type, url);
+        public void SetLink(string type, string url){
+            if (string.IsNullOrEmpty(url)){
+                Link = new LinkInfo();
+            }
+            else{
+                Link = new LinkInfo(type, url);
+            }
         }
 
         public void SetChirp(string tweetUrl, string quoteUrl, string chirpAuthors, string chirpImages){
@@ -40,21 +46,21 @@ namespace TweetDuck.Core.Management{
             private readonly string? type;
             private readonly string? url;
 
-            public LinkInfo(string? type, string? url){
+            public LinkInfo(string type, string url){
                 this.type = type;
                 this.url = url;
             }
         }
 
         public struct ChirpInfo{
-            public string TweetUrl { get; }
-            public string QuoteUrl { get; }
+            public string? TweetUrl { get; }
+            public string? QuoteUrl { get; }
 
-            public string[] Authors => chirpAuthors.Split(';');
-            public string[] Images => chirpImages.Split(';');
+            public string[] Authors => chirpAuthors?.Split(';') ?? StringUtils.EmptyArray;
+            public string[] Images => chirpImages?.Split(';') ?? StringUtils.EmptyArray;
             
-            private readonly string chirpAuthors;
-            private readonly string chirpImages;
+            private readonly string? chirpAuthors;
+            private readonly string? chirpImages;
 
             public ChirpInfo(string tweetUrl, string quoteUrl, string chirpAuthors, string chirpImages){
                 this.TweetUrl = tweetUrl;
