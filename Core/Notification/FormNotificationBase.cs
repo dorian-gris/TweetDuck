@@ -117,7 +117,7 @@ namespace TweetDuck.Core.Notification{
         public bool ContextMenuOpen { get; set; }
 
         public event EventHandler Initialized;
-        
+
         #pragma warning disable CS8618 // nullable references
         protected FormNotificationBase(FormBrowser owner, bool enableContextMenu){
         #pragma warning restore CS8618
