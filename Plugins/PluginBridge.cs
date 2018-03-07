@@ -44,7 +44,7 @@ namespace TweetDuck.Plugins{
         // Utility methods
 
         private string GetFullPathOrThrow(int token, PluginFolder folder, string path){
-            Plugin plugin = manager.GetPluginFromToken(token);
+            Plugin? plugin = manager.GetPluginFromToken(token);
             string fullPath = plugin == null ? string.Empty : plugin.GetFullPathIfSafe(folder, path);
 
             if (fullPath.Length == 0){
@@ -117,7 +117,7 @@ namespace TweetDuck.Plugins{
         }
 
         public void SetConfigurable(int token){
-            Plugin plugin = manager.GetPluginFromToken(token);
+            Plugin? plugin = manager.GetPluginFromToken(token);
 
             if (plugin != null){
                 WithConfigureFunction.Add(plugin);

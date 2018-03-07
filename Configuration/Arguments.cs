@@ -21,7 +21,7 @@ namespace TweetDuck.Configuration{
             return Current.HasFlag(flag);
         }
 
-        public static string GetValue(string key, string defaultValue){
+        public static string? GetValue(string key, string? defaultValue){
             return Current.GetValue(key, defaultValue);
         }
 

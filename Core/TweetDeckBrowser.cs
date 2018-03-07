@@ -34,7 +34,7 @@ namespace TweetDuck.Core{
         
         private readonly ChromiumWebBrowser browser;
 
-        private string prevSoundNotificationPath = null;
+        private string? prevSoundNotificationPath = null;
 
         public TweetDeckBrowser(FormBrowser owner, TweetDeckBridge bridge){
             this.browser = new ChromiumWebBrowser(TwitterUtils.TweetDeckURL){
@@ -146,7 +146,7 @@ namespace TweetDuck.Core{
                 ScriptLoader.ExecuteFile(frame, "code.js");
                 InjectBrowserCSS();
                 ReinjectCustomCSS(Program.UserConfig.CustomBrowserCSS);
-                UserConfig_SoundNotificationInfoChanged(null, EventArgs.Empty);
+                UserConfig_SoundNotificationInfoChanged(null!, EventArgs.Empty);
 
                 TweetDeckBridge.ResetStaticProperties();
 
@@ -162,7 +162,7 @@ namespace TweetDuck.Core{
             }
 
             if (!e.FailedUrl.StartsWith("http://td/", StringComparison.Ordinal)){
-                string errorPage = ScriptLoader.LoadResource("pages/error.html", true);
+                string? errorPage = ScriptLoader.LoadResource("pages/error.html", true);
 
                 if (errorPage != null){
                     browser.LoadHtml(errorPage.Replace("{err}", BrowserUtils.GetErrorName(e.ErrorCode)), "http://td/error");
@@ -214,7 +214,7 @@ namespace TweetDuck.Core{
             browser.ExecuteScriptAsync("TDGF_injectBrowserCSS", ScriptLoader.LoadResource("styles/browser.css").TrimEnd());
         }
 
-        public void ReinjectCustomCSS(string css){
+        public void ReinjectCustomCSS(string? css){
             browser.ExecuteScriptAsync("TDGF_reinjectCustomCSS", css?.Replace(Environment.NewLine, " ") ?? string.Empty);
         }
 

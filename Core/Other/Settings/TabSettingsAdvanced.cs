@@ -12,9 +12,9 @@ namespace TweetDuck.Core.Other.Settings{
     sealed partial class TabSettingsAdvanced : BaseTabSettings{
         private static SystemConfig SysConfig => Program.SystemConfig;
 
-        private readonly Action<string> reinjectBrowserCSS;
-
-        public TabSettingsAdvanced(Action<string> reinjectBrowserCSS){
+        private readonly Action<string?> reinjectBrowserCSS;
+        
+        public TabSettingsAdvanced(Action<string?> reinjectBrowserCSS){
             InitializeComponent();
 
             this.reinjectBrowserCSS = reinjectBrowserCSS;

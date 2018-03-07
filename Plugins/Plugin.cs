@@ -81,7 +81,7 @@ namespace TweetDuck.Plugins{
 
         public string GetScriptPath(PluginEnvironment environment){
             if (Environments.HasFlag(environment)){
-                string file = environment.GetPluginScriptFile();
+                string? file = environment.GetPluginScriptFile();
                 return file != null ? Path.Combine(pathRoot, file) : string.Empty;
             }
             else{
@@ -147,7 +147,7 @@ namespace TweetDuck.Plugins{
             PluginEnvironment environments = PluginEnvironment.None;
 
             foreach(string file in Directory.EnumerateFiles(path, "*.js", SearchOption.TopDirectoryOnly).Select(Path.GetFileName)){
-                environments |= PluginEnvironmentExtensions.Values.FirstOrDefault(env => file.Equals(env.GetPluginScriptFile(), StringComparison.Ordinal));
+                environments |= PluginEnvironmentExtensions.Values.FirstOrDefault(env => file.Equals(env.GetPluginScriptFile()!, StringComparison.Ordinal));
             }
 
             if (environments == PluginEnvironment.None){
@@ -164,7 +164,8 @@ namespace TweetDuck.Plugins{
                 throw new ArgumentException("Missing .meta file");
             }
             
-            string currentTag = null, currentContents = string.Empty;
+            string? currentTag = null;
+            string currentContents = string.Empty;
 
             foreach(string line in File.ReadAllLines(metaFile, Encoding.UTF8).Concat(EndTag).Select(line => line.TrimEnd()).Where(line => line.Length > 0)){
                 if (line[0] == '[' && line[line.Length-1] == ']'){

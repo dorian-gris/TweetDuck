@@ -14,8 +14,8 @@ namespace TweetDuck.Configuration{
         }
 
         private readonly string file;
-        private FileStream lockStream;
-        private Process lockingProcess;
+        private FileStream? lockStream;
+        private Process? lockingProcess;
 
         public LockManager(string file){
             this.file = file;
@@ -25,7 +25,7 @@ namespace TweetDuck.Configuration{
 
         private bool ReleaseLockFileStream(){
             if (lockStream != null){
-                lockStream.Dispose();
+                lockStream!.Dispose();
                 lockStream = null;
                 return true;
             }
@@ -135,10 +135,10 @@ namespace TweetDuck.Configuration{
         // Locking process
 
         public bool RestoreLockingProcess(int failTimeout){
-            if (lockingProcess != null && lockingProcess.MainWindowHandle == IntPtr.Zero){ // restore if the original process is in tray
-                NativeMethods.BroadcastMessage(Program.WindowRestoreMessage, (uint)lockingProcess.Id, 0);
+            if (lockingProcess != null && lockingProcess!.MainWindowHandle == IntPtr.Zero){ // restore if the original process is in tray
+                NativeMethods.BroadcastMessage(Program.WindowRestoreMessage, (uint)lockingProcess!.Id, 0);
 
-                if (WindowsUtils.TrySleepUntil(() => CheckLockingProcessExited() || (lockingProcess.MainWindowHandle != IntPtr.Zero && lockingProcess.Responding), failTimeout, RetryDelay)){
+                if (WindowsUtils.TrySleepUntil(() => CheckLockingProcessExited() || (lockingProcess!.MainWindowHandle != IntPtr.Zero && lockingProcess!.Responding), failTimeout, RetryDelay)){
                     return true;
                 }
             }
@@ -149,24 +149,24 @@ namespace TweetDuck.Configuration{
         public bool CloseLockingProcess(int closeTimeout, int killTimeout){
             if (lockingProcess != null){
                 try{
-                    if (lockingProcess.CloseMainWindow()){
+                    if (lockingProcess!.CloseMainWindow()){
                         WindowsUtils.TrySleepUntil(CheckLockingProcessExited, closeTimeout, RetryDelay);
                     }
 
-                    if (!lockingProcess.HasExited){
-                        lockingProcess.Kill();
+                    if (!lockingProcess!.HasExited){
+                        lockingProcess!.Kill();
                         WindowsUtils.TrySleepUntil(CheckLockingProcessExited, killTimeout, RetryDelay);
                     }
 
-                    if (lockingProcess.HasExited){
-                        lockingProcess.Dispose();
+                    if (lockingProcess!.HasExited){
+                        lockingProcess!.Dispose();
                         lockingProcess = null;
                         return true;
                     }
                 }catch(Exception ex) when (ex is InvalidOperationException || ex is Win32Exception){
                     if (lockingProcess != null){
                         bool hasExited = CheckLockingProcessExited();
-                        lockingProcess.Dispose();
+                        lockingProcess!.Dispose();
                         return hasExited;
                     }
                 }
@@ -175,9 +175,9 @@ namespace TweetDuck.Configuration{
             return false;
         }
 
-        private bool CheckLockingProcessExited(){
-            lockingProcess.Refresh();
-            return lockingProcess.HasExited;
+        private bool CheckLockingProcessExited(){ // only called when lockingProcess != null
+            lockingProcess!.Refresh();
+            return lockingProcess!.HasExited;
         }
     }
 }

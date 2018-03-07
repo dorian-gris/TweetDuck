@@ -76,7 +76,7 @@ namespace TweetDuck.Data.Serialization{
                         serializer = BasicSerializerObj;
                     }
 
-                    if (serializer.TryWriteType(type, value, out string converted)){
+                    if (serializer.TryWriteType(type, value, out string? converted)){
                         if (converted != null){
                             writer.Write($"{prop.Key} {EscapeLine(converted)}");
                             writer.Write(NewLineReal);
@@ -136,8 +136,8 @@ namespace TweetDuck.Data.Serialization{
                         serializer = BasicSerializerObj;
                     }
 
-                    if (serializer.TryReadType(info.PropertyType, value, out object converted)){
-                        info.SetValue(obj, converted);
+                    if (serializer.TryReadType(info.PropertyType, value, out object? converted)){
+                        info.SetValue(obj, converted!);
                     }
                     else{
                         throw new SerializationException($"Invalid file format, cannot convert value: {value} (property: {property})");
@@ -154,7 +154,7 @@ namespace TweetDuck.Data.Serialization{
         }
 
         private sealed class BasicTypeConverter : ITypeConverter{
-            bool ITypeConverter.TryWriteType(Type type, object value, out string converted){
+            bool ITypeConverter.TryWriteType(Type type, object value, out string? converted){
                 switch(Type.GetTypeCode(type)){
                     case TypeCode.Boolean:
                         converted = value.ToString();
@@ -174,7 +174,7 @@ namespace TweetDuck.Data.Serialization{
                 }
             }
 
-            bool ITypeConverter.TryReadType(Type type, string value, out object converted){
+            bool ITypeConverter.TryReadType(Type type, string value, out object? converted){
                 switch(Type.GetTypeCode(type)){
                     case TypeCode.Boolean:
                         if (bool.TryParse(value, out bool b)){

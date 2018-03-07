@@ -22,19 +22,19 @@ namespace TweetDuck.Core.Other{
         public const string Ignore = "Ignore";
         public const string Exit = "Exit";
 
-        public static bool Information(string caption, string text, string buttonAccept, string buttonCancel = null){
+        public static bool Information(string caption, string text, string buttonAccept, string? buttonCancel = null){
             return Show(caption, text, MessageBoxIcon.Information, buttonAccept, buttonCancel);
         }
 
-        public static bool Warning(string caption, string text, string buttonAccept, string buttonCancel = null){
+        public static bool Warning(string caption, string text, string buttonAccept, string? buttonCancel = null){
             return Show(caption, text, MessageBoxIcon.Warning, buttonAccept, buttonCancel);
         }
 
-        public static bool Error(string caption, string text, string buttonAccept, string buttonCancel = null){
+        public static bool Error(string caption, string text, string buttonAccept, string? buttonCancel = null){
             return Show(caption, text, MessageBoxIcon.Error, buttonAccept, buttonCancel);
         }
 
-        public static bool Question(string caption, string text, string buttonAccept, string buttonCancel = null){
+        public static bool Question(string caption, string text, string buttonAccept, string? buttonCancel = null){
             return Show(caption, text, MessageBoxIcon.Question, buttonAccept, buttonCancel);
         }
 
@@ -42,7 +42,7 @@ namespace TweetDuck.Core.Other{
             return Show(caption, text, icon, button, null);
         }
 
-        public static bool Show(string caption, string text, MessageBoxIcon icon, string buttonAccept, string buttonCancel){
+        public static bool Show(string caption, string text, MessageBoxIcon icon, string buttonAccept, string? buttonCancel){
             using(FormMessage message = new FormMessage(caption, text, icon)){
                 if (buttonCancel == null){
                     message.AddButton(buttonAccept, DialogResult.OK, ControlType.Cancel | ControlType.Focused);
@@ -58,7 +58,7 @@ namespace TweetDuck.Core.Other{
 
         // Instance
 
-        public Button ClickedButton { get; private set; }
+        public Button? ClickedButton { get; private set; }
 
         public bool HasIcon => icon != null;
         public int ActionPanelY => panelActions.Location.Y;
@@ -72,7 +72,7 @@ namespace TweetDuck.Core.Other{
             get => BrowserUtils.Scale(96, dpiScale);
         }
 
-        private readonly Icon icon;
+        private readonly Icon? icon;
         private readonly bool isReady;
         private readonly float dpiScale;
 
@@ -213,7 +213,7 @@ namespace TweetDuck.Core.Other{
 
         protected override void OnPaint(PaintEventArgs e){
             if (icon != null){
-                e.Graphics.DrawIcon(icon, BrowserUtils.Scale(25, dpiScale), 1+BrowserUtils.Scale(25, dpiScale));
+                e.Graphics.DrawIcon(icon!, BrowserUtils.Scale(25, dpiScale), 1+BrowserUtils.Scale(25, dpiScale));
             }
 
             base.OnPaint(e);

@@ -25,9 +25,9 @@ namespace TweetDuck.Core.Other.Analytics{
 
         // STATE PROPERTIES
         
-        public DateTime LastDataCollection  { get; set; } = DateTime.MinValue;
-        public string LastCollectionVersion { get; set; } = null;
-        public string LastCollectionMessage { get; set; } = null;
+        public DateTime LastDataCollection   { get; set; } = DateTime.MinValue;
+        public string? LastCollectionVersion { get; set; } = null;
+        public string? LastCollectionMessage { get; set; } = null;
 
         // USAGE DATA
 
@@ -61,7 +61,7 @@ namespace TweetDuck.Core.Other.Analytics{
 
         public event EventHandler PropertyChanged;
         
-        private readonly string file;
+        private readonly string? file;
         
         private AnalyticsFile(string file){
             this.file = file;
@@ -83,7 +83,7 @@ namespace TweetDuck.Core.Other.Analytics{
             }
 
             try{
-                Serializer.Write(file, this);
+                Serializer.Write(file!, this);
             }catch(Exception e){
                 Program.Reporter.HandleException("Analytics File Error", "Could not save the analytics file.", true, e);
             }
@@ -109,7 +109,7 @@ namespace TweetDuck.Core.Other.Analytics{
         public sealed class Counter{
             public int Value { get; private set; }
 
-            private AnalyticsFile owner;
+            private AnalyticsFile? owner;
 
             public Counter(int value){
                 this.Value = value;

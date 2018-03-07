@@ -16,7 +16,7 @@ namespace TweetDuck.Core.Notification{
         private const string NotificationScriptFile = "notification.js";
 
         private static readonly string NotificationScriptIdentifier = ScriptLoader.GetRootIdentifier(NotificationScriptFile);
-        private static readonly string NotificationJS = ScriptLoader.LoadResource(NotificationScriptFile);
+        private static readonly string? NotificationJS = ScriptLoader.LoadResource(NotificationScriptFile);
         
         private readonly PluginManager plugins;
         private readonly int timerBarHeight;

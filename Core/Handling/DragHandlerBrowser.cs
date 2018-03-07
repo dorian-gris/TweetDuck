@@ -4,7 +4,7 @@ using CefSharp;
 namespace TweetDuck.Core.Handling{
     sealed class DragHandlerBrowser : IDragHandler{
         public bool OnDragEnter(IWebBrowser browserControl, IBrowser browser, IDragData dragData, DragOperationsMask mask){
-            void TriggerDragStart(string type, string data = null){
+            void TriggerDragStart(string type, string? data = null){
                 browserControl.ExecuteScriptAsync("window.TDGF_onGlobalDragStart", type, data);
             }
 

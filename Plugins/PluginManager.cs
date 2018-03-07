@@ -12,7 +12,7 @@ using TweetDuck.Resources;
 
 namespace TweetDuck.Plugins{
     sealed class PluginManager{
-        private static readonly Dictionary<PluginEnvironment, string> PluginSetupScripts = new Dictionary<PluginEnvironment, string>(4){
+        private static readonly Dictionary<PluginEnvironment, string?> PluginSetupScripts = new Dictionary<PluginEnvironment, string?>(4){
             { PluginEnvironment.None, ScriptLoader.LoadResource("plugins.js") },
             { PluginEnvironment.Browser, ScriptLoader.LoadResource("plugins.browser.js") },
             { PluginEnvironment.Notification, ScriptLoader.LoadResource("plugins.notification.js") }
@@ -37,7 +37,7 @@ namespace TweetDuck.Plugins{
         private readonly Dictionary<int, Plugin> tokens = new Dictionary<int, Plugin>();
         private readonly Random rand = new Random();
 
-        private ITweetDeckBrowser mainBrowser;
+        private ITweetDeckBrowser? mainBrowser;
 
         public PluginManager(string rootPath, string configPath){
             this.rootPath = rootPath;
@@ -111,7 +111,7 @@ namespace TweetDuck.Plugins{
             return token;
         }
 
-        public Plugin GetPluginFromToken(int token){
+        public Plugin? GetPluginFromToken(int token){
             return tokens.TryGetValue(token, out Plugin plugin) ? plugin : null;
         }
 

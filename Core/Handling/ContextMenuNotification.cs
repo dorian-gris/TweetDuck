@@ -37,11 +37,11 @@ namespace TweetDuck.Core.Handling{
                 model.AddCheckItem(MenuFreeze, "Freeze");
                 model.SetChecked(MenuFreeze, form.FreezeTimer);
 
-                if (!string.IsNullOrEmpty(form.CurrentTweetUrl)){
+                if (!string.IsNullOrEmpty(form.CurrentTweetUrl!)){
                     model.AddSeparator();
                     model.AddItem(MenuCopyTweetUrl, "Copy tweet address");
 
-                    if (!string.IsNullOrEmpty(form.CurrentQuoteUrl)){
+                    if (!string.IsNullOrEmpty(form.CurrentQuoteUrl!)){
                         model.AddItem(MenuCopyQuotedTweetUrl, "Copy quoted tweet address");
                     }
                 }

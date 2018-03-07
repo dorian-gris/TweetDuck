@@ -16,11 +16,11 @@ namespace UnitTests.Data{
             Assert.IsTrue(File.Exists("empty"));
 
             using(CombinedFileStream cfs = new CombinedFileStream(File.OpenRead("empty"))){
-                Assert.IsNull(cfs.ReadFile());
+                Assert.IsNull(cfs.ReadFile()!);
             }
 
             using(CombinedFileStream cfs = new CombinedFileStream(File.OpenRead("empty"))){
-                Assert.IsNull(cfs.SkipFile());
+                Assert.IsNull(cfs.SkipFile()!);
             }
         }
 
@@ -39,12 +39,12 @@ namespace UnitTests.Data{
             Assert.IsTrue(File.Exists("blank_files"));
 
             using(CombinedFileStream cfs = new CombinedFileStream(File.OpenRead("blank_files"))){
-                CombinedFileStream.Entry entry1 = cfs.ReadFile();
-                string entry2key = cfs.SkipFile();
-                CombinedFileStream.Entry entry3 = cfs.ReadFile();
+                CombinedFileStream.Entry entry1 = cfs.ReadFile()!;
+                string entry2key = cfs.SkipFile()!;
+                CombinedFileStream.Entry entry3 = cfs.ReadFile()!;
 
-                Assert.IsNull(cfs.ReadFile());
-                Assert.IsNull(cfs.SkipFile());
+                Assert.IsNull(cfs.ReadFile()!);
+                Assert.IsNull(cfs.SkipFile()!);
 
                 Assert.AreEqual("id1", entry1.KeyName);
                 Assert.AreEqual("id1", entry1.Identifier);
@@ -79,11 +79,11 @@ namespace UnitTests.Data{
             Assert.IsTrue(File.Exists("text_files"));
 
             using(CombinedFileStream cfs = new CombinedFileStream(File.OpenRead("text_files"))){
-                CombinedFileStream.Entry entry = cfs.ReadFile();
+                CombinedFileStream.Entry entry = cfs.ReadFile()!;
 
                 Assert.AreEqual("key2", cfs.SkipFile());
-                Assert.IsNull(cfs.ReadFile());
-                Assert.IsNull(cfs.SkipFile());
+                Assert.IsNull(cfs.ReadFile()!);
+                Assert.IsNull(cfs.SkipFile()!);
 
                 Assert.AreEqual("key1|a|bb|ccc|dddd", entry.Identifier);
                 Assert.AreEqual("key1", entry.KeyName);
@@ -116,13 +116,13 @@ namespace UnitTests.Data{
 
             using(CombinedFileStream cfs = new CombinedFileStream(File.OpenRead("dir_test"))){
                 try{
-                    cfs.ReadFile().WriteToFile("directory/dir_test_file", false);
+                    cfs.ReadFile()!.WriteToFile("directory/dir_test_file", false);
                     Assert.Fail("WriteToFile did not trigger an exception.");
                 }catch(DirectoryNotFoundException){}
 
-                cfs.ReadFile().WriteToFile("directory/dir_test_file", true);
-                cfs.ReadFile().WriteToFile("dir_test_file", true);
-                cfs.ReadFile().WriteToFile("dir_test_file.txt", true);
+                cfs.ReadFile()!.WriteToFile("directory/dir_test_file", true);
+                cfs.ReadFile()!.WriteToFile("dir_test_file", true);
+                cfs.ReadFile()!.WriteToFile("dir_test_file.txt", true);
             }
 
             Assert.IsTrue(Directory.Exists("directory"));
@@ -148,7 +148,7 @@ namespace UnitTests.Data{
             }
 
             using(CombinedFileStream cfs = new CombinedFileStream(File.OpenRead("long_identifier_success"))){
-                Assert.AreEqual(identifier, cfs.ReadFile().Identifier);
+                Assert.AreEqual(identifier, cfs.ReadFile()!.Identifier);
             }
         }
 

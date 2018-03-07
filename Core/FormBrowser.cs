@@ -37,7 +37,7 @@ namespace TweetDuck.Core{
             }
         }
 
-        public string UpdateInstallerPath { get; private set; }
+        public string? UpdateInstallerPath { get; private set; }
 
         public PluginManager PluginManager => plugins;
         public AnalyticsFile AnalyticsFile => analytics?.File ?? AnalyticsFile.Dummy;
@@ -51,10 +51,10 @@ namespace TweetDuck.Core{
         private bool isLoaded;
         private FormWindowState prevState;
         
-        private TweetScreenshotManager notificationScreenshotManager;
-        private VideoPlayer videoPlayer;
-        private AnalyticsManager analytics;
-
+        private TweetScreenshotManager? notificationScreenshotManager;
+        private VideoPlayer? videoPlayer;
+        private AnalyticsManager? analytics;
+        
         public FormBrowser(UpdaterSettings updaterSettings){
             InitializeComponent();
 
@@ -237,7 +237,7 @@ namespace TweetDuck.Core{
             this.InvokeAsyncSafe(() => {
                 FormManager.CloseAllDialogs();
 
-                if (!string.IsNullOrEmpty(Config.DismissedUpdate)){
+                if (!string.IsNullOrEmpty(Config.DismissedUpdate!)){
                     Config.DismissedUpdate = null;
                     Config.Save();
                 }
@@ -269,8 +269,8 @@ namespace TweetDuck.Core{
             }
             
             if (browser.Ready && m.Msg == NativeMethods.WM_PARENTNOTIFY && (m.WParam.ToInt32() & 0xFFFF) == NativeMethods.WM_XBUTTONDOWN){
-                if (videoPlayer != null && videoPlayer.Running){
-                    videoPlayer.Close();
+                if (videoPlayer != null && videoPlayer!.Running){
+                    videoPlayer!.Close();
                 }
                 else{
                     browser.OnMouseClickExtra(m.WParam);
@@ -293,7 +293,7 @@ namespace TweetDuck.Core{
             notification.ResumeNotification();
         }
         
-        public void ReinjectCustomCSS(string css){
+        public void ReinjectCustomCSS(string? css){
             browser.ReinjectCustomCSS(css);
         }
 
@@ -345,7 +345,7 @@ namespace TweetDuck.Core{
             OpenSettings(null);
         }
 
-        public void OpenSettings(Type startTab){
+        public void OpenSettings(Type? startTab){
             if (!FormManager.TryBringToFront<FormSettings>()){
                 bool prevEnableUpdateCheck = Config.EnableUpdateCheck;
 
@@ -369,7 +369,7 @@ namespace TweetDuck.Core{
                         }
                     }
                     else if (analytics != null){
-                        analytics.Dispose();
+                        analytics!.Dispose();
                         analytics = null;
                     }
 
@@ -416,8 +416,8 @@ namespace TweetDuck.Core{
             AnalyticsFile.SoundNotifications.Trigger();
         }
 
-        public void PlayVideo(string url, string username){
-            if (string.IsNullOrEmpty(url)){
+        public void PlayVideo(string? url, string? username){
+            if (string.IsNullOrEmpty(url!)){
                 videoPlayer?.Close();
                 return;
             }
@@ -425,18 +425,18 @@ namespace TweetDuck.Core{
             if (videoPlayer == null){
                 videoPlayer = new VideoPlayer(this);
 
-                videoPlayer.ProcessExited += (sender, args) => {
+                videoPlayer!.ProcessExited += (sender, args) => {
                     browser.HideVideoOverlay(true);
                 };
             }
             
-            videoPlayer.Launch(url, username);
+            videoPlayer!.Launch(url!, username);
             AnalyticsFile.VideoPlays.Trigger();
         }
 
         public bool ProcessBrowserKey(Keys key){
-            if (videoPlayer != null && videoPlayer.Running){
-                videoPlayer.SendKeyEvent(key);
+            if (videoPlayer != null && videoPlayer!.Running){
+                videoPlayer!.SendKeyEvent(key);
                 return true;
             }
 
@@ -461,18 +461,18 @@ namespace TweetDuck.Core{
                 notificationScreenshotManager = new TweetScreenshotManager(this, plugins);
             }
 
-            notificationScreenshotManager.Trigger(html, width, height);
+            notificationScreenshotManager!.Trigger(html, width, height);
             AnalyticsFile.TweetScreenshots.Trigger();
         }
 
-        public void DisplayTooltip(string text){
-            if (string.IsNullOrEmpty(text)){
+        public void DisplayTooltip(string? text){
+            if (string.IsNullOrEmpty(text!)){
                 toolTip.Hide(this);
             }
             else{
                 Point position = PointToClient(Cursor.Position);
                 position.Offset(20, 10);
-                toolTip.Show(text, this, position);
+                toolTip.Show(text!, this, position);
             }
         }
     }

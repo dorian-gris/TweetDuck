@@ -45,7 +45,7 @@ namespace TweetDuck.Data{
             stream.Write(contents, 0, contents.Length);
         }
 
-        public Entry ReadFile(){
+        public Entry? ReadFile(){
             int nameLength = stream.ReadByte();
 
             if (nameLength == -1){
@@ -64,7 +64,7 @@ namespace TweetDuck.Data{
             return new Entry(Encoding.UTF8.GetString(name), contents);
         }
 
-        public string SkipFile(){
+        public string? SkipFile(){
             int nameLength = stream.ReadByte();
 
             if (nameLength == -1){

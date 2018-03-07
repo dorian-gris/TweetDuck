@@ -167,7 +167,7 @@ namespace TweetDuck{
                 string updaterArgs = "/SP- /SILENT /CLOSEAPPLICATIONS /UPDATEPATH=\""+ProgramPath+"\" /RUNARGS=\""+Arguments.GetCurrentForInstallerCmd()+"\""+(IsPortable ? " /PORTABLE=1" : "");
                 bool runElevated = !IsPortable || !WindowsUtils.CheckFolderWritePermission(ProgramPath);
 
-                if (WindowsUtils.OpenAssociatedProgram(mainForm.UpdateInstallerPath, updaterArgs, runElevated)){
+                if (WindowsUtils.OpenAssociatedProgram(mainForm.UpdateInstallerPath!, updaterArgs, runElevated)){
                     Application.Exit();
                 }
                 else{
@@ -177,7 +177,7 @@ namespace TweetDuck{
         }
 
         private static string GetDataStoragePath(){
-            string custom = Arguments.GetValue(Arguments.ArgDataFolder, null);
+            string? custom = Arguments.GetValue(Arguments.ArgDataFolder, null);
 
             if (custom != null && (custom.Contains(Path.DirectorySeparatorChar) || custom.Contains(Path.AltDirectorySeparatorChar))){
                 if (Path.GetInvalidPathChars().Any(custom.Contains)){

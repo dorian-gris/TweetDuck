@@ -73,11 +73,11 @@ namespace TweetDuck.Core.Other.Analytics{
             File.Save();
         }
 
-        private void ScheduleReportIn(TimeSpan delay, string message = null){
+        private void ScheduleReportIn(TimeSpan delay, string? message = null){
             SetLastDataCollectionTime(DateTime.Now.Subtract(CollectionInterval).Add(delay), message);
         }
 
-        private void SetLastDataCollectionTime(DateTime dt, string message = null){
+        private void SetLastDataCollectionTime(DateTime dt, string? message = null){
             File.LastDataCollection = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0, dt.Kind);
             File.LastCollectionVersion = Program.VersionTag;
             File.LastCollectionMessage = message ?? dt.ToString("g", Program.Culture);
@@ -123,7 +123,7 @@ namespace TweetDuck.Core.Other.Analytics{
                     SetLastDataCollectionTime(DateTime.Now);
                 }
                 else if (task.Exception != null){
-                    string message = null;
+                    string? message = null;
 
                     if (task.Exception.InnerException is WebException e){
                         switch(e.Status){
@@ -136,7 +136,7 @@ namespace TweetDuck.Core.Other.Analytics{
                                 break;
 
                             case WebExceptionStatus.ProtocolError:
-                                HttpWebResponse response = e.Response as HttpWebResponse;
+                                HttpWebResponse? response = e.Response as HttpWebResponse;
                                 message = "HTTP Error "+(response != null ? $"{(int)response.StatusCode} ({response.StatusDescription})" : "(unknown code)");
                                 break;
                         }

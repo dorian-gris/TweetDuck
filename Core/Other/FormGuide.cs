@@ -15,7 +15,7 @@ namespace TweetDuck.Core.Other{
         private const string GuideUrl = "https://tweetduck.chylex.com/guide/v2/";
         private const string GuidePathRegex = @"^guide(?:/v\d+)?(?:/(#.*))?";
 
-        public static bool CheckGuideUrl(string url, out string hash){
+        public static bool CheckGuideUrl(string url, out string? hash){
             if (!url.Contains("//tweetduck.chylex.com/guide")){
                 hash = null;
                 return false;
@@ -34,7 +34,7 @@ namespace TweetDuck.Core.Other{
             }
         }
 
-        public static void Show(string hash = null){
+        public static void Show(string? hash = null){
             string url = GuideUrl+(hash ?? string.Empty);
             FormGuide guide = FormManager.TryFind<FormGuide>();
             

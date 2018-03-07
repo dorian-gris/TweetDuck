@@ -11,8 +11,8 @@ using TweetDuck.Resources;
 
 namespace TweetDuck.Core.Bridge{
     class TweetDeckBridge{
-        public static string FontSize { get; private set; }
-        public static string NotificationHeadLayout { get; private set; }
+        public static string? FontSize { get; private set; }
+        public static string? NotificationHeadLayout { get; private set; }
         public static readonly ContextInfo ContextInfo = new ContextInfo();
 
         private static readonly Dictionary<string, string> SessionData = new Dictionary<string, string>(2);
@@ -68,7 +68,7 @@ namespace TweetDuck.Core.Bridge{
                 ContextInfo.SetChirp(tweetUrl, quoteUrl, chirpAuthors, chirpImages);
             }
 
-            public void DisplayTooltip(string text){
+            public void DisplayTooltip(string? text){
                 form.InvokeAsyncSafe(() => form.DisplayTooltip(text));
             }
 
@@ -84,7 +84,7 @@ namespace TweetDuck.Core.Bridge{
         public sealed class Notification : TweetDeckBridge{
             public Notification(FormBrowser form, FormNotificationMain notification) : base(form, notification){}
 
-            public void DisplayTooltip(string text){
+            public void DisplayTooltip(string? text){
                 notification.InvokeAsyncSafe(() => notification.DisplayTooltip(text));
             }
 
@@ -121,7 +121,7 @@ namespace TweetDuck.Core.Bridge{
             form.InvokeAsyncSafe(() => form.OnTweetScreenshotReady(html, width, height));
         }
 
-        public void PlayVideo(string url, string username){
+        public void PlayVideo(string? url, string? username){
             form.InvokeAsyncSafe(() => form.PlayVideo(url, username));
         }
 
@@ -129,7 +129,7 @@ namespace TweetDuck.Core.Bridge{
             form.InvokeAsyncSafe(WindowsUtils.ClipboardStripHtmlStyles);
         }
 
-        public void OpenBrowser(string url){
+        public void OpenBrowser(string? url){
             form.InvokeAsyncSafe(() => BrowserUtils.OpenExternalBrowser(url));
         }
 

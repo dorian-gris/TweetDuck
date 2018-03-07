@@ -10,8 +10,8 @@ namespace TweetDuck.Core.Notification{
     static class SoundNotification{
         public const string SupportedFormats = "*.wav;*.ogg;*.mp3;*.flac;*.opus;*.weba;*.webm";
         
-        public static IResourceHandler CreateFileHandler(string path){
-            string mimeType;
+        public static IResourceHandler? CreateFileHandler(string path){
+            string? mimeType;
 
             switch(Path.GetExtension(path)){
                 case ".weba":
@@ -25,7 +25,7 @@ namespace TweetDuck.Core.Notification{
             }
 
             try{
-                return ResourceHandler.FromFilePath(path, mimeType);
+                return ResourceHandler.FromFilePath(path, mimeType!);
             }catch{
                 FormBrowser browser = FormManager.TryFind<FormBrowser>();
 

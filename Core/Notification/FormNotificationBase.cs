@@ -102,13 +102,13 @@ namespace TweetDuck.Core.Notification{
         
         private readonly ResourceHandlerNotification resourceHandler = new ResourceHandlerNotification();
 
-        private TweetNotification currentNotification;
+        private TweetNotification? currentNotification;
         private int pauseCounter;
         
-        public string CurrentTweetUrl => currentNotification?.TweetUrl;
-        public string CurrentQuoteUrl => currentNotification?.QuoteUrl;
+        public string? CurrentTweetUrl => currentNotification?.TweetUrl;
+        public string? CurrentQuoteUrl => currentNotification?.QuoteUrl;
 
-        public bool CanViewDetail => currentNotification != null && !string.IsNullOrEmpty(currentNotification.ColumnId) && !string.IsNullOrEmpty(currentNotification.ChirpId);
+        public bool CanViewDetail => currentNotification != null && !string.IsNullOrEmpty(currentNotification!.ColumnId) && !string.IsNullOrEmpty(currentNotification!.ChirpId);
         public bool IsPaused => pauseCounter > 0;
 
         protected bool IsCursorOverBrowser => browser.Bounds.Contains(PointToClient(Cursor.Position));
@@ -212,8 +212,8 @@ namespace TweetDuck.Core.Notification{
         }
 
         protected virtual void UpdateTitle(){
-            string title = currentNotification?.ColumnTitle;
-            Text = string.IsNullOrEmpty(title) || !Program.UserConfig.DisplayNotificationColumn ? Program.BrandName : Program.BrandName+" - "+title;
+            string? title = currentNotification?.ColumnTitle;
+            Text = string.IsNullOrEmpty(title!) || !Program.UserConfig.DisplayNotificationColumn ? Program.BrandName : Program.BrandName+" - "+title;
         }
 
         public void ShowTweetDetail(){
@@ -229,14 +229,14 @@ namespace TweetDuck.Core.Notification{
             }
         }
 
-        public void DisplayTooltip(string text){
-            if (string.IsNullOrEmpty(text)){
+        public void DisplayTooltip(string? text){
+            if (string.IsNullOrEmpty(text!)){
                 toolTip.Hide(this);
             }
             else{
                 Point position = PointToClient(Cursor.Position);
                 position.Offset(20, 5);
-                toolTip.Show(text, this, position);
+                toolTip.Show(text!, this, position);
             }
         }
     }

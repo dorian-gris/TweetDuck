@@ -60,7 +60,7 @@ namespace TweetDuck.Core.Utils{
             }
         }
 
-        public static string GetImageFileName(string url){
+        public static string? GetImageFileName(string url){
             return BrowserUtils.GetFileNameFromUrl(ExtractMediaBaseLink(url));
         }
         
@@ -76,14 +76,14 @@ namespace TweetDuck.Core.Utils{
             string firstImageLink = GetMediaLink(urls[0], quality);
             int qualityIndex = firstImageLink.IndexOf(':', firstImageLink.LastIndexOf('/'));
 
-            string file = GetImageFileName(firstImageLink);
-            string ext = Path.GetExtension(file); // includes dot
+            string? file = GetImageFileName(firstImageLink);
+            string? ext = Path.GetExtension(file!); // includes dot
 
             string[] fileNameParts = qualityIndex == -1 ? new string[]{
-                Path.ChangeExtension(file, null)
+                Path.ChangeExtension(file!, null!)
             } : new string[]{
                 username,
-                Path.ChangeExtension(file, null),
+                Path.ChangeExtension(file!, null!),
                 firstImageLink.Substring(qualityIndex+1)
             };
             
@@ -103,7 +103,7 @@ namespace TweetDuck.Core.Utils{
                         BrowserUtils.DownloadFileAsync(firstImageLink, dialog.FileName, null, OnFailure);
                     }
                     else{
-                        string pathBase = Path.ChangeExtension(dialog.FileName, null);
+                        string pathBase = Path.ChangeExtension(dialog.FileName, null!);
                         string pathExt = Path.GetExtension(dialog.FileName);
 
                         for(int index = 0; index < urls.Length; index++){
@@ -114,15 +114,15 @@ namespace TweetDuck.Core.Utils{
             }
         }
 
-        public static void DownloadVideo(string url, string username){
-            string filename = BrowserUtils.GetFileNameFromUrl(url);
-            string ext = Path.GetExtension(filename);
+        public static void DownloadVideo(string url, string? username){
+            string? filename = BrowserUtils.GetFileNameFromUrl(url);
+            string? ext = Path.GetExtension(filename!);
 
             using(SaveFileDialog dialog = new SaveFileDialog{
                 AutoUpgradeEnabled = true,
                 OverwritePrompt = true,
                 Title = "Save Video",
-                FileName = string.IsNullOrEmpty(username) ? filename : $"{username} {filename}",
+                FileName = string.IsNullOrEmpty(username!) ? filename! : $"{username!} {filename!}",
                 Filter = "Video"+(string.IsNullOrEmpty(ext) ? " (unknown)|*.*" : $" (*{ext})|*{ext}")
             }){
                 if (dialog.ShowDialog() == DialogResult.OK){

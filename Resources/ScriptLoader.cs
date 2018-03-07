@@ -8,7 +8,7 @@ namespace TweetDuck.Resources{
     static class ScriptLoader{
         private const string UrlPrefix = "td:";
 
-        public static string LoadResource(string name, bool silent = false){
+        public static string? LoadResource(string name, bool silent = false){
             try{
                 return File.ReadAllText(Path.Combine(Program.ScriptPath, name), Encoding.UTF8);
             }catch(Exception ex){
@@ -24,7 +24,7 @@ namespace TweetDuck.Resources{
             ExecuteScript(frame, LoadResource(file), GetRootIdentifier(file));
         }
 
-        public static void ExecuteScript(IFrame frame, string script, string identifier){
+        public static void ExecuteScript(IFrame frame, string? script, string? identifier){
             if (script != null){
                 frame.ExecuteJavaScriptAsync(script, UrlPrefix+identifier, 1);
             }

@@ -53,7 +53,7 @@ namespace TweetDuck.Core.Notification{
             return 2000+Math.Max(1000, value*characters);
         }
 
-        public string GenerateHtml(string bodyClasses = null, bool enableCustomCSS = true){
+        public string GenerateHtml(string? bodyClasses = null, bool enableCustomCSS = true){
             StringBuilder build = new StringBuilder();
             build.Append("<!DOCTYPE html>");
             build.Append(TweetDeckBridge.NotificationHeadLayout ?? DefaultHeadLayout);
@@ -61,16 +61,16 @@ namespace TweetDuck.Core.Notification{
             if (enableCustomCSS){
                 build.Append("<style type='text/css'>").Append(CustomCSS).Append("</style>");
 
-                if (!string.IsNullOrEmpty(Program.UserConfig.CustomNotificationCSS)){
-                    build.Append("<style type='text/css'>").Append(Program.UserConfig.CustomNotificationCSS).Append("</style>");
+                if (!string.IsNullOrEmpty(Program.UserConfig.CustomNotificationCSS!)){
+                    build.Append("<style type='text/css'>").Append(Program.UserConfig.CustomNotificationCSS!).Append("</style>");
                 }
             }
             
             build.Append("</head>");
             build.Append("<body class='scroll-styled-v");
 
-            if (!string.IsNullOrEmpty(bodyClasses)){
-                build.Append(' ').Append(bodyClasses);
+            if (!string.IsNullOrEmpty(bodyClasses!)){
+                build.Append(' ').Append(bodyClasses!);
             }
 
             build.Append('\'').Append(isExample ? " td-example-notification" : "").Append("><div class='column' style='width:100%!important;height:auto!important;overflow:initial!important;'>");

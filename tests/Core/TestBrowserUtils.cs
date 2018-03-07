@@ -47,7 +47,7 @@ namespace UnitTests.Core{
             Assert.AreEqual("index", BrowserUtils.GetFileNameFromUrl("http://test.com/index"));
             Assert.AreEqual("index.", BrowserUtils.GetFileNameFromUrl("http://test.com/index."));
 
-            Assert.IsNull(BrowserUtils.GetFileNameFromUrl("http://test.com/"));
+            Assert.IsNull(BrowserUtils.GetFileNameFromUrl("http://test.com/")!);
         }
     }
 }

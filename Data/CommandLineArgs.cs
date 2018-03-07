@@ -33,14 +33,14 @@ namespace TweetDuck.Data{
             }
         }
 
-        public static CommandLineArgs ReadCefArguments(string argumentString){
+        public static CommandLineArgs ReadCefArguments(string? argumentString){
             CommandLineArgs args = new CommandLineArgs();
 
-            if (string.IsNullOrWhiteSpace(argumentString)){
+            if (string.IsNullOrWhiteSpace(argumentString!)){
                 return args;
             }
             
-            foreach(Match match in Regex.Matches(argumentString, @"([^=\s]+(?:=(?:\S*""[^""]*?""\S*|\S*))?)")){
+            foreach(Match match in Regex.Matches(argumentString!, @"([^=\s]+(?:=(?:\S*""[^""]*?""\S*|\S*))?)")){
                 string matchValue = match.Value;
 
                 int indexEquals = matchValue.IndexOf('=');
@@ -88,7 +88,7 @@ namespace TweetDuck.Data{
             return values.ContainsKey(key.ToLower());
         }
 
-        public string GetValue(string key, string defaultValue){
+        public string? GetValue(string key, string? defaultValue){
             return values.TryGetValue(key.ToLower(), out string val) ? val : defaultValue;
         }
 

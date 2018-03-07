@@ -107,7 +107,7 @@ namespace TweetDuck.Core.Other.Settings{
         }
 
         private void UpdateBrowserPathSelection(){
-            if (string.IsNullOrEmpty(Config.BrowserPath) || !File.Exists(Config.BrowserPath)){
+            if (string.IsNullOrEmpty(Config.BrowserPath!) || !File.Exists(Config.BrowserPath!)){
                 comboBoxBrowserPath.SelectedIndex = browserListIndexDefault;
             }
             else{
@@ -127,7 +127,7 @@ namespace TweetDuck.Core.Other.Settings{
                 using(OpenFileDialog dialog = new OpenFileDialog{
                     AutoUpgradeEnabled = true,
                     DereferenceLinks = true,
-                    InitialDirectory = Path.GetDirectoryName(Config.BrowserPath), // returns null if argument is null
+                    InitialDirectory = Path.GetDirectoryName(Config.BrowserPath!), // returns null if argument is null
                     Title = "Open Links With...",
                     Filter = "Executables (*.exe;*.bat;*.cmd)|*.exe;*.bat;*.cmd|All Files (*.*)|*.*"
                 }){

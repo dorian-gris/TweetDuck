@@ -6,7 +6,7 @@ using System.Text;
 namespace TweetDuck.Core.Handling{
     sealed class ResourceHandlerNotification : IResourceHandler{
         private readonly NameValueCollection headers = new NameValueCollection(0);
-        private MemoryStream dataIn;
+        private MemoryStream? dataIn;
 
         public void SetHTML(string html){
             dataIn?.Dispose();
@@ -15,7 +15,7 @@ namespace TweetDuck.Core.Handling{
 
         public void Dispose(){
             if (dataIn != null){
-                dataIn.Dispose();
+                dataIn!.Dispose();
                 dataIn = null;
             }
         }
@@ -26,7 +26,7 @@ namespace TweetDuck.Core.Handling{
         }
 
         void IResourceHandler.GetResponseHeaders(IResponse response, out long responseLength, out string redirectUrl){
-            redirectUrl = null;
+            redirectUrl = null!;
 
             response.MimeType = "text/html";
             response.StatusCode = 200;
@@ -39,9 +39,9 @@ namespace TweetDuck.Core.Handling{
             callback.Dispose();
 
             try{
-                int length = (int)dataIn.Length;
+                int length = (int)dataIn!.Length;
 
-                dataIn.CopyTo(dataOut, length);
+                dataIn!.CopyTo(dataOut, length);
                 bytesRead = length;
                 return true;
             }catch{ // catch IOException, possibly NullReferenceException if dataIn is null

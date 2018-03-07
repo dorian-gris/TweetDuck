@@ -39,7 +39,7 @@ namespace TweetDuck.Core.Utils{
             return (ChromiumWebBrowser)browserControl;
         }
 
-        public static void SetupResourceHandler(this ChromiumWebBrowser browser, string url, IResourceHandler handler){
+        public static void SetupResourceHandler(this ChromiumWebBrowser browser, string url, IResourceHandler? handler){
             DefaultResourceHandlerFactory factory = (DefaultResourceHandlerFactory)browser.ResourceHandlerFactory;
 
             if (handler == null){
@@ -72,23 +72,25 @@ namespace TweetDuck.Core.Utils{
             return UrlCheckResult.Invalid;
         }
 
-        public static void OpenExternalBrowser(string url){
-            if (string.IsNullOrWhiteSpace(url))return;
+        public static void OpenExternalBrowser(string? url){
+            if (string.IsNullOrWhiteSpace(url!)){
+                return;
+            }
 
-            switch(CheckUrl(url)){
+            switch(CheckUrl(url!)){
                 case UrlCheckResult.Fine:
-                    if (FormGuide.CheckGuideUrl(url, out string hash)){
+                    if (FormGuide.CheckGuideUrl(url!, out string? hash)){
                         FormGuide.Show(hash);
                     }
                     else{
-                        string browserPath = Program.UserConfig.BrowserPath;
+                        string? browserPath = Program.UserConfig.BrowserPath;
 
                         if (browserPath == null || !File.Exists(browserPath)){
-                            WindowsUtils.OpenAssociatedProgram(url);
+                            WindowsUtils.OpenAssociatedProgram(url!);
                         }
                         else{
                             try{
-                                using(Process.Start(browserPath, url)){}
+                                using(Process.Start(browserPath, url!)){}
                             }catch(Exception e){
                                 Program.Reporter.HandleException("Error Opening Browser", "Could not open the browser.", true, e);
                             }
@@ -127,8 +129,8 @@ namespace TweetDuck.Core.Utils{
             }
         }
 
-        public static string GetFileNameFromUrl(string url){
-            string file = Path.GetFileName(new Uri(url).AbsolutePath);
+        public static string? GetFileNameFromUrl(string url){
+            string? file = Path.GetFileName(new Uri(url).AbsolutePath);
             return string.IsNullOrEmpty(file) ? null : file;
         }
 
@@ -139,12 +141,12 @@ namespace TweetDuck.Core.Utils{
         public static WebClient CreateWebClient(){
             WindowsUtils.EnsureTLS12();
 
-            WebClient client = new WebClient{ Proxy = null };
+            WebClient client = new WebClient{ Proxy = null! };
             client.Headers[HttpRequestHeader.UserAgent] = HeaderUserAgent;
             return client;
         }
 
-        public static WebClient DownloadFileAsync(string url, string target, Action onSuccess, Action<Exception> onFailure){
+        public static WebClient DownloadFileAsync(string url, string target, Action? onSuccess, Action<Exception>? onFailure){
             WebClient client = CreateWebClient();
 
             client.DownloadFileCompleted += (sender, args) => {

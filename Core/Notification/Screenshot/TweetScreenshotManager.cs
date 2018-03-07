@@ -13,7 +13,7 @@ namespace TweetDuck.Core.Notification.Screenshot{
         private readonly Timer timeout;
         private readonly Timer disposer;
         
-        private FormNotificationScreenshotable screenshot;
+        private FormNotificationScreenshotable? screenshot;
 
         public TweetScreenshotManager(FormBrowser owner, PluginManager pluginManager){
             this.owner = owner;
@@ -33,7 +33,7 @@ namespace TweetDuck.Core.Notification.Screenshot{
 
         private void disposer_Tick(object sender, EventArgs e){
             disposer.Stop();
-            screenshot.Dispose();
+            screenshot!.Dispose();
             screenshot = null;
         }
 
@@ -43,8 +43,8 @@ namespace TweetDuck.Core.Notification.Screenshot{
             }
 
             screenshot = new FormNotificationScreenshotable(Callback, owner, plugins);
-            screenshot.LoadNotificationForScreenshot(new TweetNotification(string.Empty, string.Empty, string.Empty, html, 0, string.Empty, string.Empty), width, height);
-            screenshot.Show();
+            screenshot!.LoadNotificationForScreenshot(new TweetNotification(string.Empty, string.Empty, string.Empty, html, 0, string.Empty, string.Empty), width, height);
+            screenshot!.Show();
             timeout.Start();
 
             #if !(DEBUG && NO_HIDE_SCREENSHOTS)
@@ -58,7 +58,7 @@ namespace TweetDuck.Core.Notification.Screenshot{
             }
 
             timeout.Stop();
-            screenshot.TakeScreenshot();
+            screenshot!.TakeScreenshot();
 
             #if !(DEBUG && NO_HIDE_SCREENSHOTS)
             OnFinished();
@@ -69,7 +69,7 @@ namespace TweetDuck.Core.Notification.Screenshot{
         }
 
         private void OnFinished(){
-            screenshot.Location = ControlExtensions.InvisibleLocation;
+            screenshot!.Location = ControlExtensions.InvisibleLocation;
             owner.IsWaiting = false;
             disposer.Start();
         }

@@ -8,9 +8,9 @@ namespace TweetDuck.Core.Other.Settings.Dialogs{
         public string BrowserCSS => textBoxBrowserCSS.Text;
         public string NotificationCSS => textBoxNotificationCSS.Text;
 
-        private readonly Action<string> reinjectBrowserCSS;
-
-        public DialogSettingsCSS(Action<string> reinjectBrowserCSS){
+        private readonly Action<string?> reinjectBrowserCSS;
+        
+        public DialogSettingsCSS(Action<string?> reinjectBrowserCSS){
             InitializeComponent();
             
             Text = Program.BrandName+" Options - CSS";

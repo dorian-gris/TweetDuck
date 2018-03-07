@@ -21,7 +21,7 @@ namespace TweetDuck.Video{
         private bool isPaused;
         private bool isDragging;
 
-        private WindowsMediaPlayer Player => player.Ocx;
+        private WindowsMediaPlayer Player => player.Ocx!;
 
         public FormPlayer(IntPtr handle, int volume, string url, string token){
             InitializeComponent();

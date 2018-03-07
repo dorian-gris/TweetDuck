@@ -24,7 +24,7 @@ namespace TweetDuck.Core.Other{
 
         public bool ShouldReloadBrowser { get; private set; }
 
-        public FormSettings(FormBrowser browser, PluginManager plugins, UpdateHandler updates, AnalyticsManager analytics, Type startTab){
+        public FormSettings(FormBrowser browser, PluginManager plugins, UpdateHandler updates, AnalyticsManager? analytics, Type? startTab){
             InitializeComponent();
 
             Text = Program.BrandName+" Options";
@@ -171,7 +171,7 @@ namespace TweetDuck.Core.Other{
             public bool IsInitialized => control != null;
 
             private readonly Func<BaseTabSettings> constructor;
-            private BaseTabSettings control;
+            private BaseTabSettings? control;
 
             public SettingsTab(Button button, Func<BaseTabSettings> constructor){
                 this.Button = button;

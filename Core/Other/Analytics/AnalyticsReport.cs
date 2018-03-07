@@ -8,7 +8,7 @@ namespace TweetDuck.Core.Other.Analytics{
         private int separators;
 
         public void Add(int ignored){ // adding separators to pretty print
-            data.Add((++separators).ToString(), null);
+            data.Add((++separators).ToString(), null!);
         }
 
         public void Add(string key, string value){

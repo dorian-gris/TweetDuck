@@ -32,7 +32,7 @@ namespace TweetDuck.Core.Utils{
             public string Code { get; }
             public CultureInfo Info { get; }
 
-            public Item(string code, string alt = null){
+            public Item(string code, string? alt = null){
                 this.Code = code;
                 this.Info = CultureInfo.GetCultureInfo(alt ?? code);
             }

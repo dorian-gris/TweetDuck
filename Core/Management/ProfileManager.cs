@@ -77,7 +77,7 @@ namespace TweetDuck.Core.Management{
 
             try{
                 using(CombinedFileStream stream = new CombinedFileStream(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.None))){
-                    string key;
+                    string? key;
 
                     while((key = stream.SkipFile()) != null){
                         switch(key){
@@ -113,7 +113,7 @@ namespace TweetDuck.Core.Management{
                 HashSet<string> missingPlugins = new HashSet<string>();
 
                 using(CombinedFileStream stream = new CombinedFileStream(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.None))){
-                    CombinedFileStream.Entry entry;
+                    CombinedFileStream.Entry? entry;
 
                     while((entry = stream.ReadFile()) != null){
                         switch(entry.KeyName){

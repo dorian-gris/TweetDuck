@@ -57,7 +57,7 @@ namespace TweetDuck.Core.Other.Analytics{
                 { "Translation Target Language" , UserConfig.TranslationTarget },
                 0,
                 { "Updates"          , Bool(UserConfig.EnableUpdateCheck) },
-                { "Update Dismissed" , Bool(!string.IsNullOrEmpty(UserConfig.DismissedUpdate)) },
+                { "Update Dismissed" , Bool(!string.IsNullOrEmpty(UserConfig.DismissedUpdate!)) },
                 0,
                 { "Tray"           , TrayMode },
                 { "Tray Highlight" , Bool(UserConfig.EnableTrayHighlight) },
@@ -140,7 +140,7 @@ namespace TweetDuck.Core.Other.Analytics{
         private static string[] ProgramArguments { get; }
 
         static AnalyticsReportGenerator(){
-            string osName, osEdition, osBuild;
+            string? osName, osEdition, osBuild;
 
             try{
                 using(RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", false)){
@@ -176,14 +176,14 @@ namespace TweetDuck.Core.Other.Analytics{
                 RamSize = 0;
             }
 
-            string gpu = null;
+            string? gpu = null;
 
             try{
                 using(ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT Caption FROM Win32_VideoController")){
                     foreach(ManagementBaseObject obj in searcher.Get()){
-                        string vendor = obj["Caption"] as string;
+                        string? vendor = obj["Caption"] as string;
 
-                        if (!string.IsNullOrEmpty(vendor)){
+                        if (!string.IsNullOrEmpty(vendor!)){
                             gpu = vendor;
                         }
                     }
@@ -201,7 +201,7 @@ namespace TweetDuck.Core.Other.Analytics{
 
         private static string CustomBrowser{
             get{
-                return Path.GetFileName(UserConfig.BrowserPath) ?? string.Empty;
+                return Path.GetFileName(UserConfig.BrowserPath!) ?? string.Empty;
             }
         }
 
@@ -318,7 +318,7 @@ namespace TweetDuck.Core.Other.Analytics{
                 }
             }
 
-            public string Resolution { get; private set; }
+            public string? Resolution { get; private set; }
             public int? DPI { get; private set; }
 
             private ExternalInfo(){}

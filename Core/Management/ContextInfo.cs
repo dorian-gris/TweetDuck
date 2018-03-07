@@ -10,8 +10,8 @@ namespace TweetDuck.Core.Management{
             Reset();
         }
         
-        public void SetLink(string type, string url){
-            Link = new LinkInfo(string.IsNullOrEmpty(url) ? null : type, url);
+        public void SetLink(string? type, string? url){
+            Link = new LinkInfo(string.IsNullOrEmpty(url!) ? null : type, url);
         }
 
         public void SetChirp(string tweetUrl, string quoteUrl, string chirpAuthors, string chirpImages){
@@ -31,17 +31,17 @@ namespace TweetDuck.Core.Management{
             public bool IsVideo => type == "video";
 
             public string GetUrl(IContextMenuParams parameters, bool safe){
-                return IsLink ? url : (safe ? parameters.LinkUrl : parameters.UnfilteredLinkUrl);
+                return IsLink ? url! : (safe ? parameters.LinkUrl : parameters.UnfilteredLinkUrl);
             }
 
             public string GetMediaSource(IContextMenuParams parameters){
-                return IsImage || IsVideo ? url : parameters.SourceUrl;
+                return IsImage || IsVideo ? url! : parameters.SourceUrl;
             }
 
-            private readonly string type;
-            private readonly string url;
+            private readonly string? type;
+            private readonly string? url;
 
-            public LinkInfo(string type, string url){
+            public LinkInfo(string? type, string? url){
                 this.type = type;
                 this.url = url;
             }

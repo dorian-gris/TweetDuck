@@ -10,13 +10,13 @@ namespace TweetDuck.Updates{
         public string InstallerPath { get; }
 
         public UpdateDownloadStatus DownloadStatus { get; private set; }
-        public Exception DownloadError { get; private set; }
+        public Exception? DownloadError { get; private set; }
 
         private readonly string installerFolder;
-        private readonly string downloadUrl;
-        private WebClient currentDownload;
+        private readonly string? downloadUrl;
+        private WebClient? currentDownload;
 
-        public UpdateInfo(UpdaterSettings settings, int eventId, string versionTag, string downloadUrl){
+        public UpdateInfo(UpdaterSettings settings, int eventId, string versionTag, string? downloadUrl){
             this.installerFolder = settings.InstallerDownloadFolder;
             this.downloadUrl = downloadUrl;
 
@@ -37,13 +37,13 @@ namespace TweetDuck.Updates{
                     return;
                 }
 
-                if (string.IsNullOrEmpty(downloadUrl)){
+                if (string.IsNullOrEmpty(downloadUrl!)){
                     DownloadError = new UriFormatException("Could not determine URL of the update installer");
                     DownloadStatus = UpdateDownloadStatus.Failed;
                     return;
                 }
 
-                currentDownload = BrowserUtils.DownloadFileAsync(downloadUrl, InstallerPath, () => {
+                currentDownload = BrowserUtils.DownloadFileAsync(downloadUrl!, InstallerPath, () => {
                     DownloadStatus = UpdateDownloadStatus.Done;
                     currentDownload = null;
                 }, e => {
@@ -57,8 +57,8 @@ namespace TweetDuck.Updates{
         public void DeleteInstaller(){
             DownloadStatus = UpdateDownloadStatus.None;
 
-            if (currentDownload != null && currentDownload.IsBusy){
-                currentDownload.CancelAsync(); // deletes file when cancelled
+            if (currentDownload != null && currentDownload!.IsBusy){
+                currentDownload!.CancelAsync(); // deletes file when cancelled
                 return;
             }
 

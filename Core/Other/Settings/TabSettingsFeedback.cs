@@ -11,7 +11,7 @@ namespace TweetDuck.Core.Other.Settings{
         private readonly AnalyticsReportGenerator.ExternalInfo analyticsInfo;
         private readonly PluginManager plugins;
 
-        public TabSettingsFeedback(AnalyticsManager analytics, AnalyticsReportGenerator.ExternalInfo analyticsInfo, PluginManager plugins){
+        public TabSettingsFeedback(AnalyticsManager? analytics, AnalyticsReportGenerator.ExternalInfo analyticsInfo, PluginManager plugins){
             InitializeComponent();
             
             this.analyticsFile = analytics?.File ?? AnalyticsFile.Load(Program.AnalyticsFilePath);
@@ -21,8 +21,8 @@ namespace TweetDuck.Core.Other.Settings{
             checkDataCollection.Checked = Config.AllowDataCollection;
 
             if (analytics != null){
-                string collectionTime = analyticsFile.LastCollectionMessage;
-                labelDataCollectionMessage.Text = string.IsNullOrEmpty(collectionTime) ? "No collection yet" : "Last collection: "+collectionTime;
+                string? collectionTime = analyticsFile.LastCollectionMessage;
+                labelDataCollectionMessage.Text = string.IsNullOrEmpty(collectionTime!) ? "No collection yet" : "Last collection: "+collectionTime;
             }
         }
 

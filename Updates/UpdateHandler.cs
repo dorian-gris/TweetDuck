@@ -19,7 +19,7 @@ namespace TweetDuck.Updates{
         public event EventHandler<UpdateEventArgs> CheckFinished;
 
         private ushort lastEventId;
-        private UpdateInfo lastUpdateInfo;
+        private UpdateInfo? lastUpdateInfo;
 
         public UpdateHandler(ITweetDeckBrowser browser, UpdaterSettings settings){
             this.browser = browser;
@@ -79,7 +79,7 @@ namespace TweetDuck.Updates{
 
         public void CleanupDownload(){
             if (lastUpdateInfo != null){
-                lastUpdateInfo.DeleteInstaller();
+                lastUpdateInfo!.DeleteInstaller();
                 lastUpdateInfo = null;
             }
         }
@@ -108,11 +108,11 @@ namespace TweetDuck.Updates{
                 owner.Check(false);
             }
 
-            public void OnUpdateCheckFinished(int eventId, string versionTag, string downloadUrl){
-                if (versionTag != null && (owner.lastUpdateInfo == null || owner.lastUpdateInfo.VersionTag != versionTag)){
+            public void OnUpdateCheckFinished(int eventId, string? versionTag, string? downloadUrl){
+                if (versionTag != null && (owner.lastUpdateInfo == null || owner.lastUpdateInfo!.VersionTag != versionTag)){
                     owner.CleanupDownload();
                     owner.lastUpdateInfo = new UpdateInfo(owner.settings, eventId, versionTag, downloadUrl);
-                    owner.lastUpdateInfo.BeginSilentDownload();
+                    owner.lastUpdateInfo!.BeginSilentDownload();
                 }
 
                 owner.TriggerCheckFinishedEvent(new UpdateEventArgs(eventId, owner.lastUpdateInfo));
@@ -120,13 +120,13 @@ namespace TweetDuck.Updates{
 
             public void OnUpdateAccepted(){
                 if (owner.lastUpdateInfo != null){
-                    owner.TriggerUpdateAcceptedEvent(new UpdateEventArgs(owner.lastUpdateInfo));
+                    owner.TriggerUpdateAcceptedEvent(new UpdateEventArgs(owner.lastUpdateInfo!));
                 }
             }
 
             public void OnUpdateDismissed(){
                 if (owner.lastUpdateInfo != null){
-                    owner.TriggerUpdateDismissedEvent(new UpdateEventArgs(owner.lastUpdateInfo));
+                    owner.TriggerUpdateDismissedEvent(new UpdateEventArgs(owner.lastUpdateInfo!));
                     owner.CleanupDownload();
                 }
             }

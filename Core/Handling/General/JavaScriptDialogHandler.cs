@@ -30,7 +30,7 @@ namespace TweetDuck.Core.Handling.General{
         bool IJsDialogHandler.OnJSDialog(IWebBrowser browserControl, IBrowser browser, string originUrl, CefJsDialogType dialogType, string messageText, string defaultPromptText, IJsDialogCallback callback, ref bool suppressMessage){
             ((ChromiumWebBrowser)browserControl).InvokeSafe(() => {
                 FormMessage form;
-                TextBox input = null;
+                TextBox? input = null;
 
                 if (dialogType == CefJsDialogType.Alert){
                     form = CreateMessageForm("Browser Message", messageText);

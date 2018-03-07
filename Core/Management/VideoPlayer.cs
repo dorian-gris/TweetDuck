@@ -9,15 +9,15 @@ using TweetLib.Communication;
 
 namespace TweetDuck.Core.Management{
     sealed class VideoPlayer : IDisposable{
-        public bool Running => currentInstance != null && currentInstance.Running;
+        public bool Running => currentInstance != null && currentInstance!.Running;
 
-        public event EventHandler ProcessExited;
+        public event EventHandler? ProcessExited;
 
         private readonly FormBrowser owner;
-        private string lastUrl;
-        private string lastUsername;
+        private string? lastUrl;
+        private string? lastUsername;
 
-        private Instance currentInstance;
+        private Instance? currentInstance;
         private bool isClosing;
 
         public VideoPlayer(FormBrowser owner){
@@ -25,7 +25,7 @@ namespace TweetDuck.Core.Management{
             this.owner.FormClosing += owner_FormClosing;
         }
 
-        public void Launch(string url, string username){
+        public void Launch(string url, string? username){
             if (Running){
                 Destroy();
                 isClosing = false;
@@ -81,9 +81,9 @@ namespace TweetDuck.Core.Management{
                         break;
 
                     case "download":
-                        if (!string.IsNullOrEmpty(lastUrl)){
+                        if (!string.IsNullOrEmpty(lastUrl!)){
                             owner.AnalyticsFile.DownloadedVideos.Trigger();
-                            TwitterUtils.DownloadVideo(lastUrl, lastUsername);
+                            TwitterUtils.DownloadVideo(lastUrl!, lastUsername);
                         }
 
                         break;
@@ -107,8 +107,8 @@ namespace TweetDuck.Core.Management{
                 }
                 else{
                     isClosing = true;
-                    currentInstance.Process.Exited -= process_Exited;
-                    currentInstance.Pipe.Write("die");
+                    currentInstance!.Process.Exited -= process_Exited;
+                    currentInstance!.Pipe.Write("die");
                 }
             }
         }
@@ -122,7 +122,7 @@ namespace TweetDuck.Core.Management{
 
         private void Destroy(){
             if (currentInstance != null){
-                currentInstance.KillAndDispose();
+                currentInstance!.KillAndDispose();
                 currentInstance = null;
 
                 TriggerProcessExitEventUnsafe();
@@ -131,7 +131,7 @@ namespace TweetDuck.Core.Management{
 
         private void owner_FormClosing(object sender, FormClosingEventArgs e){
             if (currentInstance != null){
-                currentInstance.Process.Exited -= process_Exited;
+                currentInstance!.Process.Exited -= process_Exited;
             }
         }
 
@@ -146,9 +146,9 @@ namespace TweetDuck.Core.Management{
                 return;
             }
 
-            int exitCode = currentInstance.Process.ExitCode;
+            int exitCode = currentInstance!.Process.ExitCode;
 
-            currentInstance.Dispose();
+            currentInstance!.Dispose();
             currentInstance = null;
 
             switch(exitCode){

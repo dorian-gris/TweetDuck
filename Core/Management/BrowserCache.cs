@@ -9,7 +9,7 @@ namespace TweetDuck.Core.Management{
         public static string CacheFolder => Path.Combine(Program.StoragePath, "Cache");
         
         private static bool ClearOnExit;
-        private static Timer AutoClearTimer;
+        private static Timer? AutoClearTimer;
 
         private static long CalculateCacheSize(){
             return new DirectoryInfo(CacheFolder).EnumerateFiles().Select(file => {
@@ -31,7 +31,7 @@ namespace TweetDuck.Core.Management{
             bool shouldRun = Program.SystemConfig.ClearCacheAutomatically && !ClearOnExit;
 
             if (!shouldRun && AutoClearTimer != null){
-                AutoClearTimer.Dispose();
+                AutoClearTimer!.Dispose();
                 AutoClearTimer = null;
             }
             else if (shouldRun && AutoClearTimer == null){
@@ -45,7 +45,7 @@ namespace TweetDuck.Core.Management{
                             // TODO should probably log errors and report them at some point
                         }
                     }
-                }, null, TimeSpan.FromSeconds(30), TimeSpan.FromHours(4));
+                }, null!, TimeSpan.FromSeconds(30), TimeSpan.FromHours(4));
             }
         }
 
@@ -56,7 +56,7 @@ namespace TweetDuck.Core.Management{
 
         public static void Exit(){
             if (AutoClearTimer != null){
-                AutoClearTimer.Dispose();
+                AutoClearTimer!.Dispose();
                 AutoClearTimer = null;
             }
 

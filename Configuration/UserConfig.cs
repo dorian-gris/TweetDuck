@@ -49,7 +49,7 @@ namespace TweetDuck.Configuration{
 
         public bool IgnoreTrackingUrlWarning { get; set; } = false;
         public bool EnableSmoothScrolling    { get; set; } = true;
-        public string BrowserPath            { get; set; } = null;
+        public string? BrowserPath           { get; set; } = null;
         private int _zoomLevel                             = 100;
         private bool _muteNotifications;
 
@@ -62,8 +62,8 @@ namespace TweetDuck.Configuration{
         private TrayIcon.Behavior _trayBehavior       = TrayIcon.Behavior.Disabled;
         public bool EnableTrayHighlight { get; set; } = true;
 
-        public bool EnableUpdateCheck { get; set; } = true;
-        public string DismissedUpdate { get; set; } = null;
+        public bool EnableUpdateCheck  { get; set; } = true;
+        public string? DismissedUpdate { get; set; } = null;
 
         public bool DisplayNotificationColumn    { get; set; } = false;
         public bool NotificationMediaPreviews    { get; set; } = true;
@@ -84,12 +84,12 @@ namespace TweetDuck.Configuration{
         public Size CustomNotificationSize             { get; set; } = Size.Empty;
         public int NotificationScrollSpeed             { get; set; } = 100;
 
-        private string _notificationSoundPath;
+        private string? _notificationSoundPath;
         private int _notificationSoundVolume = 100;
 
-        public string CustomCefArgs         { get; set; } = null;
-        public string CustomBrowserCSS      { get; set; } = null;
-        public string CustomNotificationCSS { get; set; } = null;
+        public string? CustomCefArgs         { get; set; } = null;
+        public string? CustomBrowserCSS      { get; set; } = null;
+        public string? CustomNotificationCSS { get; set; } = null;
         
         // SPECIAL PROPERTIES
 
@@ -197,7 +197,7 @@ namespace TweetDuck.Configuration{
         }
         
         public static UserConfig Load(string file){
-            Exception firstException = null;
+            Exception? firstException = null;
 
             for(int attempt = 0; attempt < 2; attempt++){
                 try{
