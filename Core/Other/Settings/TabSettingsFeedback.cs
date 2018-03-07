@@ -10,8 +10,10 @@ namespace TweetDuck.Core.Other.Settings{
         private readonly AnalyticsFile analyticsFile;
         private readonly AnalyticsReportGenerator.ExternalInfo analyticsInfo;
         private readonly PluginManager plugins;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public TabSettingsFeedback(AnalyticsManager? analytics, AnalyticsReportGenerator.ExternalInfo analyticsInfo, PluginManager plugins){
+        #pragma warning restore CS8618
             InitializeComponent();
             
             this.analyticsFile = analytics?.File ?? AnalyticsFile.Load(Program.AnalyticsFilePath);

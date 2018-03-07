@@ -23,8 +23,10 @@ namespace TweetDuck.Core.Other{
         private SettingsTab currentTab;
 
         public bool ShouldReloadBrowser { get; private set; }
-
+        
+        #pragma warning disable CS8618 // nullable references
         public FormSettings(FormBrowser browser, PluginManager plugins, UpdateHandler updates, AnalyticsManager? analytics, Type? startTab){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             Text = Program.BrandName+" Options";

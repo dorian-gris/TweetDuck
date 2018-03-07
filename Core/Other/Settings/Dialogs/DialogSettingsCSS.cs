@@ -10,7 +10,9 @@ namespace TweetDuck.Core.Other.Settings.Dialogs{
 
         private readonly Action<string?> reinjectBrowserCSS;
         
+        #pragma warning disable CS8618 // nullable references
         public DialogSettingsCSS(Action<string?> reinjectBrowserCSS){
+        #pragma warning restore CS8618
             InitializeComponent();
             
             Text = Program.BrandName+" Options - CSS";

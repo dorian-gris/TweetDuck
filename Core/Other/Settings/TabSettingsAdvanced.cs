@@ -14,7 +14,9 @@ namespace TweetDuck.Core.Other.Settings{
 
         private readonly Action<string?> reinjectBrowserCSS;
         
+        #pragma warning disable CS8618 // nullable references
         public TabSettingsAdvanced(Action<string?> reinjectBrowserCSS){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.reinjectBrowserCSS = reinjectBrowserCSS;

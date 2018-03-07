@@ -41,8 +41,10 @@ namespace TweetDuck.Core.Other{
 
         private readonly ContextMenu contextMenu;
         private bool hasNotifications;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public TrayIcon(){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.contextMenu = new ContextMenu();

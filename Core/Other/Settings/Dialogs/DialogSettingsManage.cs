@@ -33,8 +33,10 @@ namespace TweetDuck.Core.Other.Settings.Dialogs{
         private ProfileManager importManager;
 
         private ProfileManager.Items _selectedItems = ProfileManager.Items.None;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public DialogSettingsManage(PluginManager plugins){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.plugins = plugins;

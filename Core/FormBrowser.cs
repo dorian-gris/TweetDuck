@@ -55,7 +55,9 @@ namespace TweetDuck.Core{
         private VideoPlayer? videoPlayer;
         private AnalyticsManager? analytics;
         
+        #pragma warning disable CS8618 // nullable references
         public FormBrowser(UpdaterSettings updaterSettings){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             Text = Program.BrandName;

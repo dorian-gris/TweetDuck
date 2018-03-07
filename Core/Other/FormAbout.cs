@@ -8,8 +8,10 @@ namespace TweetDuck.Core.Other{
     sealed partial class FormAbout : Form{
         private const string TipsLink = "https://github.com/chylex/TweetDuck/wiki";
         private const string IssuesLink = "https://github.com/chylex/TweetDuck/issues";
-
+        
+        #pragma warning disable CS8618 // nullable references
         public FormAbout(){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             Text = "About "+Program.BrandName+" "+Program.VersionTag;

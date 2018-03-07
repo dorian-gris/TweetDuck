@@ -9,8 +9,10 @@ namespace TweetDuck.Core.Other.Settings{
         private static readonly int[] IdlePauseSeconds = { 0, 30, 60, 120, 300 };
 
         private readonly FormNotificationExample notification;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public TabSettingsNotifications(FormNotificationExample notification){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.notification = notification;

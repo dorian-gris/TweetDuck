@@ -10,7 +10,9 @@ namespace TweetDuck.Core.Other{
     sealed partial class FormPlugins : Form{
         private readonly PluginManager pluginManager;
         
+        #pragma warning disable CS8618 // nullable references
         public FormPlugins(){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             Text = Program.BrandName+" Plugins";

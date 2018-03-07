@@ -73,8 +73,10 @@ namespace TweetDuck.Core.Notification{
         }
         
         public Size BrowserSize => Program.UserConfig.DisplayNotificationTimer ? new Size(ClientSize.Width, ClientSize.Height-timerBarHeight) : ClientSize;
-
+        
+        #pragma warning disable CS8618 // nullable references
         protected FormNotificationMain(FormBrowser owner, PluginManager pluginManager, bool enableContextMenu) : base(owner, enableContextMenu){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.plugins = pluginManager;

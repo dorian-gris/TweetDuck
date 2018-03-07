@@ -22,8 +22,10 @@ namespace TweetDuck.Video{
         private bool isDragging;
 
         private WindowsMediaPlayer Player => player.Ocx!;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public FormPlayer(IntPtr handle, int volume, string url, string token){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.ownerHandle = handle;

@@ -11,8 +11,10 @@ namespace TweetDuck.Plugins.Controls{
         private readonly Plugin plugin;
 
         private readonly float dpiScale;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public PluginControl(){
+        #pragma warning restore CS8618
             InitializeComponent();
         }
 

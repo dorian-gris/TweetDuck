@@ -28,8 +28,10 @@ namespace TweetDuck.Core.Notification{
         private readonly Queue<TweetNotification> tweetQueue = new Queue<TweetNotification>(4);
         private bool needsTrim;
         private bool hasTemporarilyMoved;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public FormNotificationTweet(FormBrowser owner, PluginManager pluginManager) : base(owner, pluginManager, true){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             Program.UserConfig.MuteToggled += Config_MuteToggled;

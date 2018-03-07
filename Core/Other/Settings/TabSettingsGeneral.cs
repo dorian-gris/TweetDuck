@@ -15,7 +15,8 @@ namespace TweetDuck.Core.Other.Settings{
 
         private readonly int browserListIndexDefault;
         private readonly int browserListIndexCustom;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public TabSettingsGeneral(FormBrowser browser, UpdateHandler updates){
             InitializeComponent();
 

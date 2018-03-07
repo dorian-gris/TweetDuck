@@ -4,7 +4,9 @@ using TweetDuck.Core.Utils;
 
 namespace TweetDuck.Core.Other.Settings{
     sealed partial class TabSettingsLocales : BaseTabSettings{
+        #pragma warning disable CS8618 // nullable references
         public TabSettingsLocales(){
+        #pragma warning restore CS8618
             InitializeComponent();
             
             toolTip.SetToolTip(checkSpellCheck, "Underlines words that are spelled incorrectly.");

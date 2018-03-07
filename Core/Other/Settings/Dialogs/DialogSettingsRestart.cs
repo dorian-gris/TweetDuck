@@ -6,8 +6,10 @@ using TweetDuck.Data;
 namespace TweetDuck.Core.Other.Settings.Dialogs{
     sealed partial class DialogSettingsRestart : Form{
         public CommandLineArgs Args { get; private set; }
-
+        
+        #pragma warning disable CS8618 // nullable references
         public DialogSettingsRestart(CommandLineArgs currentArgs){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             cbLogging.Checked = currentArgs.HasFlag(Arguments.ArgLogging);

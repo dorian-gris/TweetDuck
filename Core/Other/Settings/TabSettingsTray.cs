@@ -2,7 +2,9 @@
 
 namespace TweetDuck.Core.Other.Settings{
     sealed partial class TabSettingsTray : BaseTabSettings{
+        #pragma warning disable CS8618 // nullable references
         public TabSettingsTray(){
+        #pragma warning restore CS8618
             InitializeComponent();
             
             toolTip.SetToolTip(comboBoxTrayType, "Changes behavior of the Tray icon.\r\nRight-click the icon for an action menu.");

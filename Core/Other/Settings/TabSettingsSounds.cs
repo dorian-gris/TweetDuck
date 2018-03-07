@@ -8,8 +8,10 @@ using TweetDuck.Core.Notification;
 namespace TweetDuck.Core.Other.Settings{
     sealed partial class TabSettingsSounds : BaseTabSettings{
         private readonly Action playSoundNotification;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public TabSettingsSounds(Action playSoundNotification){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.playSoundNotification = playSoundNotification;

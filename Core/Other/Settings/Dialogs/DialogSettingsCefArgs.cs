@@ -7,8 +7,10 @@ using TweetDuck.Data;
 namespace TweetDuck.Core.Other.Settings.Dialogs{
     sealed partial class DialogSettingsCefArgs : Form{
         public string CefArgs => textBoxArgs.Text;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public DialogSettingsCefArgs(){
+        #pragma warning restore CS8618
             InitializeComponent();
             
             Text = Program.BrandName+" Options - CEF Arguments";

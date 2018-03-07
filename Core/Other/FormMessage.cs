@@ -80,8 +80,10 @@ namespace TweetDuck.Core.Other{
         private int buttonCount;
         private int prevLabelWidth, prevLabelHeight;
         private bool wasLabelMultiline;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public FormMessage(string caption, string text, MessageBoxIcon messageIcon){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.dpiScale = this.GetDPIScale();

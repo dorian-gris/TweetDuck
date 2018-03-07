@@ -6,8 +6,10 @@ using TweetDuck.Core.Utils;
 namespace TweetDuck.Updates{
     sealed partial class FormUpdateDownload : Form{
         private readonly UpdateInfo updateInfo;
-
+        
+        #pragma warning disable CS8618 // nullable references
         public FormUpdateDownload(UpdateInfo info){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.updateInfo = info;
