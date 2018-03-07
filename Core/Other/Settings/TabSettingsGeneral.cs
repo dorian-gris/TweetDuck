@@ -18,6 +18,7 @@ namespace TweetDuck.Core.Other.Settings{
         
         #pragma warning disable CS8618 // nullable references
         public TabSettingsGeneral(FormBrowser browser, UpdateHandler updates){
+        #pragma warning restore CS8618
             InitializeComponent();
 
             this.browser = browser;

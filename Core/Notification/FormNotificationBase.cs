@@ -219,7 +219,9 @@ namespace TweetDuck.Core.Notification{
         }
 
         public void ShowTweetDetail(){
-            owner.ShowTweetDetail(currentNotification.ColumnId, currentNotification.ChirpId, currentNotification.TweetUrl);
+            if (currentNotification != null){
+                owner.ShowTweetDetail(currentNotification!.ColumnId, currentNotification!.ChirpId, currentNotification!.TweetUrl);
+            }
         }
 
         public void MoveToVisibleLocation(){
