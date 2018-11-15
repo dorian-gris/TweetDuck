@@ -80,7 +80,7 @@ namespace TweetDuck.Core.Handling.General{
             return true;
         }
 
-        bool IJsDialogHandler.OnJSBeforeUnload(IWebBrowser browserControl, IBrowser browser, string message, bool isReload, IJsDialogCallback callback){
+        bool IJsDialogHandler.OnBeforeUnloadDialog(IWebBrowser browserControl, IBrowser browser, string message, bool isReload, IJsDialogCallback callback){
             return false;
         }
 
